@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](pyproject.toml)
 
-A small contract-first SDK for local dashboards and kiosk panels.
+A small **Contract-first** SDK for local dashboards and kiosk panels.
 
 It helps you define dashboard widgets as portable JSON manifests with explicit data sources, field contracts, renderer contracts, layout hints, and reusable presets.
 
