@@ -1,0 +1,22 @@
+{
+  "id": "cpu-load",
+  "title": "CPU Load",
+  "version": "0.1.0",
+  "status": "production",
+  "source": {
+    "kind": "local-json",
+    "path": "system.load",
+    "refreshMs": 5000
+  },
+  "renderer": {
+    "kind": "stat",
+    "valuePath": "value",
+    "unit": "%",
+    "thresholds": [
+      {"level": "warn", "gte": 75},
+      {"level": "bad", "gte": 90}
+    ]
+  },
+  "layout": {"minW": 1, "minH": 1, "defaultW": 2, "defaultH": 1},
+  "tags": ["system", "production"]
+}

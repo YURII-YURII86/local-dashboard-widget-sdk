@@ -1,0 +1,11 @@
+{
+  "kind": "preset",
+  "id": "stat-compact",
+  "title": "Compact stat panel",
+  "renderer": "stat",
+  "layout": {"minW": 1, "minH": 1, "defaultW": 2, "defaultH": 1},
+  "defaults": {
+    "unit": "",
+    "thresholds": []
+  }
+}

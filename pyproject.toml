@@ -1,0 +1,23 @@
+[project]
+name = "local-dashboard-widget-sdk"
+version = "0.1.0"
+description = "Contract-first widget SDK for local dashboards and kiosk panels"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "local-dashboard-widget-sdk contributors"}]
+keywords = ["dashboard", "widgets", "kiosk", "json", "schema", "local-first", "panels"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+dependencies = []
+
+[project.scripts]
+ldw = "local_dashboard_widget_sdk.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/YURII-YURII86/local-dashboard-widget-sdk"
+Repository = "https://github.com/YURII-YURII86/local-dashboard-widget-sdk"
+Issues = "https://github.com/YURII-YURII86/local-dashboard-widget-sdk/issues"
