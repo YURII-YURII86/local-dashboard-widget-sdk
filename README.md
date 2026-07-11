@@ -145,6 +145,10 @@ Not yet extracted from Slane as a drop-in replacement. This repo is a clean gene
 ./scripts/smoke_test.sh
 ```
 
+## Part of Linux Kiosk Stack
+
+This project is one layer of the [Linux Kiosk Stack](https://github.com/YURII-YURII86/linux-kiosk-stack): a local-first toolkit for Linux TV kiosks, dashboards, signage screens, and appliance panels.
+
 ## Roadmap
 
 - JSON Schema export.
