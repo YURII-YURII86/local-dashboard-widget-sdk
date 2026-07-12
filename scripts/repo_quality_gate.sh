@@ -5,12 +5,12 @@ cd "$(dirname "$0")/.."
 printf 'repo quality gate: local-dashboard-widget-sdk\n'
 fail() { printf 'FAIL: %s\n' "$1" >&2; exit 1; }
 
-printf '\n[1/9] tracked generated/private files\n'
+printf '\n[1/10] tracked generated/private files\n'
 tracked_bad="$(git ls-files | grep -E '(^|/)(__pycache__|\.ai_context|AGENTS\.md|CLAUDE\.md|\.egg-info|debug.*\.jsonl)' || true)"
 if [[ -n "$tracked_bad" ]]; then printf '%s\n' "$tracked_bad"; fail 'tracked generated/private files found'; fi
 printf 'ok\n'
 
-printf '\n[2/9] version consistency\n'
+printf '\n[2/10] version consistency\n'
 python3 - <<'PY'
 import re
 from pathlib import Path
@@ -26,7 +26,7 @@ assert f'## {project_version}' in Path('CHANGELOG.md').read_text(), 'CHANGELOG m
 print('ok', project_version)
 PY
 
-printf '\n[3/9] entry points import\n'
+printf '\n[3/10] entry points import\n'
 PYTHONPATH=src python3 - <<'PY'
 import importlib
 import re
@@ -47,10 +47,10 @@ for name,target in scripts.items():
 print('ok', len(scripts))
 PY
 
-printf '\n[4/9] smoke test\n'
+printf '\n[4/10] smoke test\n'
 ./scripts/smoke_test.sh
 
-printf '\n[5/9] schema/type export freshness\n'
+printf '\n[5/10] schema/type export freshness\n'
 PYTHONPATH=src python3 -m local_dashboard_widget_sdk.cli schema --output /tmp/ldw-quality-schema.json
 PYTHONPATH=src python3 -m local_dashboard_widget_sdk.cli typescript --output /tmp/ldw-quality-types.d.ts
 cmp -s schemas/contracts.schema.json /tmp/ldw-quality-schema.json
@@ -66,16 +66,24 @@ assert 'DashboardContract' in types
 print('ok')
 PY
 
-printf '\n[6/9] README/docs required sections\n'
+printf '\n[6/10] catalog viewer assets\n'
+python3 scripts/build_catalog_viewer.py
+python3 tests/catalog_viewer_check.py
+if command -v node >/dev/null 2>&1; then
+  node --check examples/catalog-viewer/viewer.js
+fi
+
+printf '\n[7/10] README/docs required sections\n'
 python3 - <<'PY'
 from pathlib import Path
 readme=Path('README.md').read_text()
-required=['Why this exists','Quick start','JSON Schema and TypeScript','Commands','Current verification status','Part of Linux Kiosk Stack','Roadmap']
+required=['Why this exists','Quick start','JSON Schema and TypeScript','Commands','Current verification status','Part of Linux Kiosk Stack','Browser catalog viewer','Roadmap']
 missing=[x for x in required if x not in readme]
 assert not missing, missing
 for path, markers in {
     'docs/manifest.md':['Machine-readable schema'],
-    'docs/integration.md':['TypeScript integration'],
+    'docs/integration.md':['TypeScript integration','Catalog viewer'],
+    'docs/catalog-viewer.md':['Browser catalog viewer','Validation'],
     'docs/renderers.md':['Renderer contracts'],
     'docs/presets.md':['Panel presets'],
 }.items():
@@ -85,7 +93,7 @@ for path, markers in {
 print('ok')
 PY
 
-printf '\n[7/9] local markdown links\n'
+printf '\n[8/10] local markdown links\n'
 python3 - <<'PY'
 from pathlib import Path
 import re
@@ -105,7 +113,7 @@ if errors:
 print('ok')
 PY
 
-printf '\n[8/9] public privacy scan\n'
+printf '\n[9/10] public privacy scan\n'
 python3 - <<'PY'
 from pathlib import Path
 needles=['14'+':ab','tail'+'ad','/mnt/'+'slane','Мои '+'приложения','Сл'+'ейн','SL'+'ANE','slane'+'-stick','yu'+'rii','yu'+'rii86','gh'+'p_','Keen'+'etic']
@@ -120,7 +128,7 @@ if hits:
 print('ok')
 PY
 
-printf '\n[9/9] CI workflow hygiene\n'
+printf '\n[10/10] CI workflow hygiene\n'
 grep -q 'permissions:' .github/workflows/ci.yml
 grep -q 'contents: read' .github/workflows/ci.yml
 grep -q 'ubuntu-24.04' .github/workflows/ci.yml

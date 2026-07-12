@@ -23,3 +23,9 @@ PY
 cmp -s schemas/contracts.schema.json /tmp/ldw-contracts.schema.json
 cmp -s types/contracts.d.ts /tmp/ldw-contracts.d.ts
 echo 'smoke ok'
+
+python3 scripts/build_catalog_viewer.py
+python3 tests/catalog_viewer_check.py
+if command -v node >/dev/null 2>&1; then
+  node --check examples/catalog-viewer/viewer.js
+fi

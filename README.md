@@ -6,6 +6,8 @@
 
 A small **Contract-first** SDK for local dashboards and kiosk panels.
 
+![Catalog viewer demo](docs/assets/catalog-viewer-demo.png)
+
 It helps you define dashboard widgets as portable JSON manifests with explicit data sources, field contracts, renderer contracts, layout hints, and reusable presets.
 
 ```text
@@ -39,6 +41,7 @@ This SDK makes those contracts explicit before the widget reaches a dashboard.
 - Example widgets and presets.
 - CLI and Python API.
 - CI-friendly smoke tests.
+- Static browser catalog viewer.
 
 ## Install from source
 
@@ -75,6 +78,23 @@ Run self-test:
 ```bash
 ldw self-test
 ```
+
+## Browser catalog viewer
+
+A static browser catalog viewer is included for example widgets and presets:
+
+```bash
+python3 -m http.server 8766
+# open http://127.0.0.1:8766/examples/catalog-viewer/
+```
+
+Regenerate its data from the committed examples:
+
+```bash
+python3 scripts/build_catalog_viewer.py
+```
+
+See `docs/catalog-viewer.md`.
 
 ## JSON Schema and TypeScript
 
@@ -155,6 +175,7 @@ ldw self-test
 - `docs/renderers.md` — renderer contracts.
 - `docs/presets.md` — panel presets.
 - `docs/integration.md` — how to integrate with a local dashboard shell.
+- `docs/catalog-viewer.md` — static browser catalog viewer.
 
 ## Current verification status
 
@@ -165,6 +186,7 @@ Verified in this standalone repository:
 - catalog summary;
 - JSON Schema export;
 - TypeScript definitions export;
+- static browser catalog viewer;
 - fresh-clone smoke tests;
 - GitHub Actions CI.
 
@@ -178,7 +200,7 @@ Run publication-readiness checks locally:
 ./scripts/repo_quality_gate.sh
 ```
 
-The gate verifies version consistency, entry points, smoke tests, schema/type exports, required docs sections, local Markdown links, privacy/publication cleanliness, and CI workflow hygiene.
+The gate verifies version consistency, entry points, smoke tests, schema/type exports, browser catalog viewer assets, required docs sections, local Markdown links, privacy/publication cleanliness, and CI workflow hygiene.
 
 ## Test
 
@@ -192,7 +214,6 @@ This project is one layer of the [Linux Kiosk Stack](https://github.com/YURII-YU
 
 ## Roadmap
 
-- Browser catalog viewer.
 - Lab → production promotion gate.
 - Dashboard layout draft validation.
 - More examples for real kiosk shells.

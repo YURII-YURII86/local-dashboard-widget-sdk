@@ -20,3 +20,8 @@ ldw typescript --output types/contracts.d.ts
 ```
 
 Use `DashboardWidgetManifest`, `DashboardPreset`, and `DashboardContract` in frontend/editor code so UI state follows the same contract as CI validation.
+
+
+## Catalog viewer
+
+Use `examples/catalog-viewer/` to inspect example widget and preset contracts in a browser without a backend or build step. Regenerate `catalog-data.js` with `python3 scripts/build_catalog_viewer.py`.

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.1 - 2026-07-12
+
+- Added static browser catalog viewer for example widgets and presets.
+- Added generated `examples/catalog-viewer/catalog-data.js`.
+- Added browser-rendered catalog screenshot and `docs/catalog-viewer.md`.
+- Added catalog viewer checks to smoke and repository quality gates.
+
 ## 0.2.0 - 2026-07-11
 
 - Added `ldw schema` JSON Schema export.

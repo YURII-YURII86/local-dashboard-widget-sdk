@@ -1,6 +1,6 @@
 [project]
 name = "local-dashboard-widget-sdk"
-version = "0.2.0"
+version = "0.2.1"
 description = "Contract-first widget SDK for local dashboards and kiosk panels"
 readme = "README.md"
 requires-python = ">=3.10"

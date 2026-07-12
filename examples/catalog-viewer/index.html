@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Local Dashboard Widget Catalog</title>
+  <link rel="stylesheet" href="viewer.css">
+</head>
+<body>
+  <main class="shell" aria-label="Widget catalog viewer">
+    <header class="hero">
+      <p class="eyebrow">Local Dashboard Widget SDK</p>
+      <h1>Widget Catalog Viewer</h1>
+      <p class="lede">Browse example widget and preset contracts without Python, backend services, or a build step.</p>
+      <div class="stats" id="catalog-stats" aria-label="Catalog stats"></div>
+    </header>
+
+    <section class="toolbar" aria-label="Catalog filters">
+      <label>
+        Search
+        <input id="search" type="search" placeholder="cpu, table, production...">
+      </label>
+      <label>
+        Renderer
+        <select id="renderer-filter"><option value="all">All renderers</option></select>
+      </label>
+      <label>
+        Status
+        <select id="status-filter">
+          <option value="all">All statuses</option>
+          <option value="production">production</option>
+          <option value="lab">lab</option>
+          <option value="draft">draft</option>
+          <option value="deprecated">deprecated</option>
+          <option value="preset">preset</option>
+        </select>
+      </label>
+    </section>
+
+    <section class="grid" id="catalog-grid" aria-label="Widget and preset cards"></section>
+
+    <section class="detail" aria-label="Selected contract">
+      <div>
+        <p class="eyebrow" id="detail-kind">Select a card</p>
+        <h2 id="detail-title">Contract details</h2>
+        <p id="detail-meta">Choose a widget or preset to inspect the JSON contract.</p>
+      </div>
+      <pre id="detail-json"><code>{}</code></pre>
+    </section>
+  </main>
+  <script src="catalog-data.js"></script>
+  <script src="viewer.js"></script>
+</body>
+</html>
