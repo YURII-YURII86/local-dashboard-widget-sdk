@@ -9,3 +9,14 @@ Typical flow:
 3. Run `ldw catalog widgets/ --json` to produce a catalog.
 4. Let the dashboard shell render only `production` widgets by default.
 5. Keep `draft` and `lab` widgets visible only in development/audit views.
+
+
+## TypeScript integration
+
+Generate TypeScript definitions for browser apps and config editors:
+
+```bash
+ldw typescript --output types/contracts.d.ts
+```
+
+Use `DashboardWidgetManifest`, `DashboardPreset`, and `DashboardContract` in frontend/editor code so UI state follows the same contract as CI validation.

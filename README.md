@@ -76,6 +76,24 @@ Run self-test:
 ldw self-test
 ```
 
+## JSON Schema and TypeScript
+
+Export the machine-readable contract used by validators and downstream tooling:
+
+```bash
+ldw schema --output schemas/contracts.schema.json
+ldw typescript --output types/contracts.d.ts
+```
+
+The generated files are committed in this repository:
+
+```text
+schemas/contracts.schema.json
+types/contracts.d.ts
+```
+
+This makes the SDK useful outside Python: browser shells, TypeScript apps, config editors, and CI pipelines can consume the same contract.
+
 ## Widget manifest example
 
 ```json
@@ -120,6 +138,17 @@ Built-in renderer contract kinds:
 - `status-history`
 - `custom`
 
+## Commands
+
+```bash
+ldw validate <paths...>
+ldw catalog <paths...> [--json]
+ldw scaffold <widget-id> --title "Title" [--renderer stat] [--source local-json] [--output widget.json]
+ldw schema [--output schemas/contracts.schema.json]
+ldw typescript [--output types/contracts.d.ts]
+ldw self-test
+```
+
 ## Documentation
 
 - `docs/manifest.md` — widget manifest contract.
@@ -134,10 +163,22 @@ Verified in this standalone repository:
 - manifest/source/renderer/preset validation;
 - scaffold generation;
 - catalog summary;
+- JSON Schema export;
+- TypeScript definitions export;
 - fresh-clone smoke tests;
 - GitHub Actions CI.
 
 Not yet extracted from Slane as a drop-in replacement. This repo is a clean generic SDK inspired by Slane Stik's internal widget contracts, not a dump of Slane private configs.
+
+## Repository quality gate
+
+Run publication-readiness checks locally:
+
+```bash
+./scripts/repo_quality_gate.sh
+```
+
+The gate verifies version consistency, entry points, smoke tests, schema/type exports, required docs sections, local Markdown links, privacy/publication cleanliness, and CI workflow hygiene.
 
 ## Test
 
@@ -151,8 +192,6 @@ This project is one layer of the [Linux Kiosk Stack](https://github.com/YURII-YU
 
 ## Roadmap
 
-- JSON Schema export.
-- TypeScript type generation.
 - Browser catalog viewer.
 - Lab → production promotion gate.
 - Dashboard layout draft validation.

@@ -13,3 +13,14 @@ Required fields:
 - `layout`: layout constraints.
 
 The manifest describes what the widget expects. It does not render by itself.
+
+
+## Machine-readable schema
+
+The canonical schema can be exported with:
+
+```bash
+ldw schema --output schemas/contracts.schema.json
+```
+
+The committed schema is `schemas/contracts.schema.json`.

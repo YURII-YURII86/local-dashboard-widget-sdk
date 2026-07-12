@@ -5,7 +5,10 @@ import json
 import sys
 from pathlib import Path
 
+from . import __version__
 from .core import ContractError, catalog, scaffold_widget, validate_paths
+from .schema import contract_schema
+from .typescript import typescript_definitions
 
 
 def cmd_validate(args: argparse.Namespace) -> int:
@@ -42,6 +45,27 @@ def cmd_scaffold(args: argparse.Namespace) -> int:
     return 0
 
 
+def write_or_print(text: str, output: str | None) -> None:
+    if output:
+        out = Path(output)
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(text, encoding="utf-8")
+        print(f"wrote {out}")
+    else:
+        print(text, end="")
+
+
+def cmd_schema(args: argparse.Namespace) -> int:
+    text = json.dumps(contract_schema(), ensure_ascii=False, indent=2) + "\n"
+    write_or_print(text, args.output)
+    return 0
+
+
+def cmd_typescript(args: argparse.Namespace) -> int:
+    write_or_print(typescript_definitions(), args.output)
+    return 0
+
+
 def cmd_self_test(args: argparse.Namespace) -> int:
     widget = scaffold_widget("self-test-widget", "Self Test Widget", "stat", "local-json")
     # validate the in-memory object by writing through catalog-style validator manually
@@ -54,7 +78,7 @@ def cmd_self_test(args: argparse.Namespace) -> int:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="ldw", description="Local Dashboard Widget SDK contract tools.")
-    parser.add_argument("--version", action="version", version="local-dashboard-widget-sdk 0.1.0")
+    parser.add_argument("--version", action="version", version=f"local-dashboard-widget-sdk {__version__}")
     sub = parser.add_subparsers(dest="cmd", required=True)
 
     p = sub.add_parser("validate", help="validate widget/preset JSON files or directories")
@@ -73,6 +97,15 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--source", default="local-json")
     p.add_argument("--output")
     p.set_defaults(func=cmd_scaffold)
+
+
+    p = sub.add_parser("schema", help="export JSON Schema for widget/preset contracts")
+    p.add_argument("--output")
+    p.set_defaults(func=cmd_schema)
+
+    p = sub.add_parser("typescript", help="export TypeScript definitions for widget/preset contracts")
+    p.add_argument("--output")
+    p.set_defaults(func=cmd_typescript)
 
     p = sub.add_parser("self-test", help="run internal self-test")
     p.set_defaults(func=cmd_self_test)
